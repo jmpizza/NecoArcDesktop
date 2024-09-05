@@ -10,9 +10,19 @@ import pygame
 def extract_frames(numOfFrames, path):
     gif = Image.open(path)
     frames = []
+    monitors = get_monitors()
     for i in range(numOfFrames):
         pil_image = gif.convert('RGBA')
-        frame = pygame.image.fromstring(pil_image.tobytes(), pil_image.size, 'RGBA')
+
+
+        original_width, original_height = pil_image.size
+        aspect_ratio = original_width/original_height
+        pet_height = int(monitors[0].height * 0.15)
+        pet_width = int(pet_height * aspect_ratio)
+
+        resized_image = pil_image.resize((pet_width, pet_height))
+
+        frame = pygame.image.fromstring(resized_image.tobytes(), resized_image.size, 'RGBA')
         frames.append(frame)
         gif.seek(gif.tell() + 1)
     return frames
