@@ -34,13 +34,33 @@ class Neco:
         self.screen.fill(self.black)
 
 
-    def walk(self, gif):
-        for frame in range(len(gif)):
-            self.screen.fill(self.black)
-            self.screen.blit(gif[frame], (self.pet_xposition, self.pet_yposition))
-            self.pet_xposition += 10
-            pygame.display.flip()
-            self.clock.tick(9)
-            if self.pet_xposition > self.monitors[0].width:
-                 self.pet_xposition = -200
+    def walk_right(self, gif, times = 1):
+        self.screen.fill(self.black)
+        self.screen.blit(gif[0], (self.pet_xposition, self.pet_yposition))
+        pygame.display.flip()
+        self.clock.tick(9)
+        for _ in range(times):
+            for frame in range(1, len(gif)-1):
+                self.screen.fill(self.black)
+                self.screen.blit(gif[frame], (self.pet_xposition, self.pet_yposition))
+                self.pet_xposition += 10
+                pygame.display.flip()
+                self.clock.tick(9)
+                if self.pet_xposition > self.monitors[0].width:
+                    self.pet_xposition = -200
+                    self.screen.fill(self.black)
+        self.screen.fill(self.black)
+        self.screen.blit(gif[0], (self.pet_xposition, self.pet_yposition))
+        pygame.display.flip()
+        self.clock.tick(9)
+
+    
+    def standing(self, gif, times = 1):
+        for _ in range(times):
+            for frame in range(len(gif)):
+                self.screen.fill(self.black)
+                self.screen.blit(gif[frame], (self.pet_xposition, self.pet_yposition))
+                pygame.display.flip()
+                self.clock.tick(10)
+
         
